@@ -154,9 +154,8 @@ int main(int argc, char *argv[])
         exit(1);
     }
     }
-        //count = num_substring_backup();
+
     count = total;
-    printf("Total in main = %d\n",total);
 
     gettimeofday(&end, NULL);
 
@@ -164,6 +163,7 @@ int main(int argc, char *argv[])
     usecs = end.tv_usec - start.tv_usec;
     mtime = ((secs) * 1000 + usecs/1000.0) + 0.5;
 
+    printf ("Number of threads: %d\n", NUM_THREADS);
     printf ("The number of substrings is : %d\n" , count) ;
     printf ("Elapsed time is : %f milliseconds\n", mtime );
     printf ("Number of words in file is : %d\n" , n1);

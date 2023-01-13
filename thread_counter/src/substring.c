@@ -1,4 +1,4 @@
-/*
+ /*
 Execution Instructions:
 gcc -o substringTh1 substringTh1.c -lpthread
 ./substringTh1 filename.txt
@@ -39,7 +39,7 @@ int readf(char* filename)
         return -1;
     }
     
-    s2=(char *)malloc(sizeof(char)*MAX);
+    s2=(char *)malloc(sizeof(char) *MAX);
     
     if (s1==NULL)
     {
@@ -64,18 +64,19 @@ int readf(char* filename)
 void *num_substring (void *a)
 {
     int i,j,k;
-    int count ;
+    int count;
     int thread_counter = thread_count++;//each time we go into this function, increment thread_counter for proper division of n1
-    if(thread_count != NUM_THREADS-1)//then we add the length of n2 to the upper bound, to catch cases where a word is split up
+
+    if(thread_count != NUM_THREADS - 1)//then we add the length of n2 to the upper bound, to catch cases where a word is split up
     {
-        for(i = thread_counter * ((n1-n2)/NUM_THREADS); i < (( thread_counter + 1 ) * ((n1-n2)/NUM_THREADS)) + n2; i++)
+        for(i = thread_counter * ((n1 - n2) / NUM_THREADS); i < (( thread_counter + 1 ) * ((n1 - n2) / NUM_THREADS)) + n2; i++)
         {
             count = 0;
             for(j = i ,k = 0; k < n2; j++,k++)// run up to length of string 2
             { /*search for the next string of size of n2*/
-                if (*(s1+j)!=*(s2+k)) //if the ascii of string1 + j isn't equal to ascii of string2 + k, break
+                if (*(s1 + j) != *(s2 + k)) //if the ascii of string1 + j isn't equal to ascii of string2 + k, break
                 {
-                  break ;
+                  break;
                 }
                 else //otherwise, ascii was same
                 {
@@ -93,20 +94,20 @@ void *num_substring (void *a)
     }
     else
     {
-        for(i = thread_counter * ((n1-n2)/NUM_THREADS); i < ( thread_counter + 1 ) * ((n1-n2)/NUM_THREADS); i++)
+        for(i = thread_counter * ((n1 - n2) / NUM_THREADS); i < ( thread_counter + 1 ) * ((n1 - n2) / NUM_THREADS); i++)
         {
             count = 0;
             for(j = i ,k = 0; k < n2; j++,k++)// run up to length of string 2
             { /*search for the next string of size of n2*/
-                if (*(s1+j)!=*(s2+k)) //if the ascii of string1 + j isn't equal to ascii of string2 + k, break
+                if (*(s1 + j) != *(s2 + k)) //if the ascii of string1 + j isn't equal to ascii of string2 + k, break
                 {
-                  break ;
+                  break;
                 }
                 else //otherwise, ascii was same
                 {
                     count++;
                 }
-                if (count==n2)//if number of times s1+j matched s2+k up to n2 length, then length of word from s1 matched s2, assume match
+                if (count == n2)//if number of times s1+j matched s2+k up to n2 length, then length of word from s1 matched s2, assume match
                 {
                     pthread_mutex_lock( &mutex );
                     total++;
@@ -125,10 +126,12 @@ int main(int argc, char *argv[])
     
     int count ;
     pthread_mutex_init( & mutex, NULL);
+
     if( argc < 2 )
     {
       printf("Error: You must pass in the datafile as a commandline parameter\n");
     }
+
     printf("Trying to read file: %s\n", argv[1]);
     readf ( argv[1] ) ;
     
@@ -139,7 +142,7 @@ int main(int argc, char *argv[])
     gettimeofday(&start, NULL);
     //creating 4 threads to run num_substring
     for(int i = 0; i < NUM_THREADS; i++){
-    if(pthread_create(&tid[i],NULL,num_substring,NULL)){
+    if(pthread_create(&tid[i], NULL, num_substring, NULL)){
         printf("\nError creating thread 1\n");
         exit(1);
     }
@@ -152,7 +155,7 @@ int main(int argc, char *argv[])
     }
     }
         //count = num_substring_backup();
-        count = total;
+    count = total;
     printf("Total in main = %d\n",total);
 
     gettimeofday(&end, NULL);
